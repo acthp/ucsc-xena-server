@@ -38,7 +38,7 @@
 ;(byte-freqs-p (mapv #(.getBytes ^String %) ["foo" "bar" "baz" "horse" "fly"]))
 
 (defn- take-lowest [^ArrayBlockingQueue q0
-                   ^ArrayBlockingQueue q1]
+                    ^ArrayBlockingQueue q1]
     (let [v0 (.peek q0) v1 (.peek q1)]
         (if (or (not v1) (and v0 (>= (:priority v1) (:priority v0))))
             (.take q0)
@@ -126,10 +126,10 @@
 (defn- ht-coded-dictionary [codes ^java.io.ByteArrayOutputStream out]
   (write-int (count codes) out)
   (doseq [{:keys [code length]} codes]
-            (write-int code out)
-            (write-int length out))
+         (write-int code out)
+         (write-int length out))
   (doseq [{:keys [symbol]} codes]
-            (.write out ^byte symbol))
+         (.write out ^byte symbol))
   (dotimes [i (rem (- 4 (rem (count codes) 4)) 4)] ; extend to word boundary
     (.write out 0)))
 
@@ -158,7 +158,7 @@
                  (rest groups)
                  (+ start (count nodes))
                  depth1
-                 (conj! acc 
+                 (conj! acc
                         (assoc group
                                :length depth1
                                :symbols (map #(assoc %1 :code %2)
@@ -175,9 +175,9 @@
                   groups)))
 
 (comment
-(defn spy [msg x]
-  (println msg x)
-  x))
+ (defn spy [msg x]
+   (println msg x)
+   x))
 
 ; Return the compactly-encoded canonical dictionary
 ; len count, lens, bytes
@@ -238,10 +238,10 @@
                         (.write output (bit-and 0xff (bit-shift-right out 8)))
                         (when (= m 64)
                           (.write output (bit-and 0xff out))))))))))
-            (if (>= m 8)
-              (let [shift (* 8 (quot m 8))]
-                (recur (inc i) (bit-shift-left out shift) (long (- m shift))))
-              (recur (inc i) out m)))
+          (if (>= m 8)
+            (let [shift (* 8 (quot m 8))]
+              (recur (inc i) (bit-shift-left out shift) (long (- m shift))))
+            (recur (inc i) out m)))
         (when (not= m 0) ; write last partial byte
           (.write output (bit-and 0xff (bit-shift-right out 56))))))))
 
@@ -319,7 +319,7 @@
               (if (= 0 (bit-and (bit-shift-left 1 i) code))
                 :right
                 :left))
-             assoc :symbol sym))
+            assoc :symbol sym))
 
 ; build decoding tree for huffman encoding
 (defn huff-tree [^ByteBufferAsIntBufferL buff32 ^ByteBuffer buff8 offset32]
@@ -424,11 +424,11 @@
   (println disa)
   (= disa disb)
   (let [s (map #(.getBytes ^String %) ["foo" "bar" "baz" "one" "two" "three"])]
-        (display-dictionary (dictionary (build s))))
+       (display-dictionary (dictionary (build s))))
   (let [s (map #(.getBytes ^String %) ["foo" "bar" "baz" "one" "two" "three" "zzzzzzz"])
         huffman (build s)
         dict (dictionary huffman)
-        encoded (encode-bytes dict (apply concat s))
-        ]
+        encoded (encode-bytes dict (apply concat s))]
+
     (display-dictionary dict)
     [(count encoded) (into [] encoded)]))

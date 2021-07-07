@@ -147,10 +147,10 @@
         (throw ex)))))
 
 (comment (defn- del-datasets [args]
-   (dorun (map del-exp args))))
+          (dorun (map del-exp args))))
 
 (comment (defn- print-datasets []
-   (dorun (map println (datasets)))))
+          (dorun (map println (datasets)))))
 
 (defn load-edn-from
   [filename]
@@ -250,23 +250,23 @@
 
 ; XXX call clean-sources somewhere?? Should be automated.
 (comment (defn- loadfiles [load-fn root args]
-   (when (not (> (count args) 0))
-     (println "Usage\nload <filename>")
-     (System/exit 0))
+          (when (not (> (count args) 0))
+            (println "Usage\nload <filename>")
+            (System/exit 0))
 
    ; Skip files outside the designated path
-   (let [{in-path true, not-in-path false}
-         (group-by #(in-data-path root %) args)]
-     (when not-in-path
-       (binding [*out* *err*]
-         (println "These files are outside the CAVM data path and will not be served:")
-         (println (s/join "\n" (in-path false)))))
-     (create)
-     (println "Loading " (count in-path) " file(s)")
-     (dorun (map #(do (print %2 %1 "") (time (load-report load-fn root %1)))
-                 in-path
-                 (range (count in-path) 0 -1)))
-     (clean-sources))))
+          (let [{in-path true, not-in-path false}
+                (group-by #(in-data-path root %) args)]
+            (when not-in-path
+              (binding [*out* *err*]
+                (println "These files are outside the CAVM data path and will not be served:")
+                (println (s/join "\n" (in-path false)))))
+            (create)
+            (println "Loading " (count in-path) " file(s)")
+            (dorun (map #(do (print %2 %1 "") (time (load-report load-fn root %1)))
+                        in-path
+                        (range (count in-path) 0 -1)))
+            (clean-sources))))
 
 (defn- load-files [port always files]
   (client/post (str "http://localhost:" port "/update/")
@@ -457,12 +457,12 @@
                                         (System/exit 1))
                                       (throw ex))))))]
                         (when (and gui serve) (try
-                                    (reset! xena-import (XenaImport/start))
-                                    (catch Exception ex
-                                      (binding [*out* *err*]
-                                        (println "Failed to start gui. Logging error.")
-                                        (error "Failed to start gui." ex)
-                                        nil))))
+                                               (reset! xena-import (XenaImport/start))
+                                               (catch Exception ex
+                                                 (binding [*out* *err*]
+                                                   (println "Failed to start gui. Logging error.")
+                                                   (error "Failed to start gui." ex)
+                                                   nil))))
                         (Splash/close)
                         (reset! db (h2/create-xenadb database))
                         (when server
@@ -478,10 +478,10 @@
 ; When logging to the repl from a future, *err* gets lost.
 ; This will set it to the repl terminal, for reasons I don't understand.
 (comment (defn snoop [msg x]
-   (.start (Thread. #(binding [*out* *err*]
-                       (println msg x)
-                       (flush))))
-   x))
+          (.start (Thread. #(binding [*out* *err*]
+                              (println msg x)
+                              (flush))))
+          x))
 
 
 (comment
@@ -496,7 +496,7 @@
     (def testloader (cl/loader-agent testdb testdetector docroot))
     ;            (watch (partial file-changed #'testloader docroot-default) docroot-default)
     (def keystore {:keystore (.toString (io/resource "localhost.keystore"))
-                  :password  "localxena"})
+                   :password  "localxena"})
 
     (let [[loader load-queue] testloader]
       (def ws-config (events/jetty-config load-queue))
@@ -504,8 +504,8 @@
                         (re-pattern (s/join "|" (conj trusted-hosts local-trusted-host))))))
     (defonce server (serv #'app "localhost" 7222 keystore ws-config))
 
-    (.start server)
-    )
+    (.start server))
+
 
   (do (.stop server)
       (events/jetty-config-dispose)

@@ -55,8 +55,8 @@
       (ct/is (= {"a" [] "b" []}
                 (sqleval/evaluate rows
                                   store
-                                  {:select ["a" "b"] :where [:in "a" [:z :y]]})))
-      )))
+                                  {:select ["a" "b"] :where [:in "a" [:z :y]]}))))))
+
 
 (ct/deftest arr-test
   (ct/testing "array operations"

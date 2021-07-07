@@ -76,9 +76,9 @@
         [(.toByteArray acc)]))))
 
 (comment
-(defn decompress [[init diffs]]
-    (reductions (fn [^String prev [n suffix]] (str (.substring prev 0 n) suffix))
-                init diffs)))
+ (defn decompress [[init diffs]]
+     (reductions (fn [^String prev [n suffix]] (str (.substring prev 0 n) suffix))
+                 init diffs)))
 
 (defn compress-bin [strings]
     {:header (into-array Byte/TYPE (concat (.getBytes ^String (first strings)) [0])) ; XXX eliminate concat. use implicit zero?
@@ -140,10 +140,10 @@
         ht (huffman/make-hu-tucker (map #(:header %) front-coded))
         ; XXX Does get-bytes make sense? Why do we need to do this?
         compressed-headers (map #(get-bytes huffman/write ht (:header %))
-                                  front-coded)
+                                 front-coded)
         huff (huffman/make-huffman (r/mapcat :inner front-coded))
         compressed (r/foldcat (r/map #(get-bytes huffman/write huff (:inner %))
-                           front-coded))
+                               front-coded))
         sizes (map #(+ (count %1) (count %2)) compressed-headers compressed)
         offsets (reductions + 0 (take (dec (count sizes)) sizes))]
     {:length (count ordered)
@@ -319,8 +319,8 @@
 ;(merge-sorted-v [] ["boo" "bff" "foo" "goo" "hoo"])
 ;(merge-sorted-v ["boo" "foo"] [])
 ;(merge-sorted-v ["boo" "foo" "zoo"] ["boo" "foo" "goo" "hoo"])
-(defn lookup-htfc [htfc i]
-  )
+(defn lookup-htfc [htfc i])
+
 
 (defn find-htfc [htfc s])
 
@@ -356,7 +356,7 @@
   (let [strings strings
         in (time (serialize-htfc (compress-htfc strings 256)))
         out (time (into [] (uncompress-dict (htfc-offsets (doto (ByteBuffer/wrap in)
-                                                    (.order java.nio.ByteOrder/LITTLE_ENDIAN))))))]
+                                                           (.order java.nio.ByteOrder/LITTLE_ENDIAN))))))]
     (= (sort strings) out))
 
   (time
@@ -434,5 +434,4 @@
   ;                          more entropy in tcga/gtex ids?
 
   (float (/ 207422 22000))    ; 9.42 bytes per string, toil
-  (float (/ 8900000 1300000)) ; 6.8 bytes per string, singlecell
-)
+  (float (/ 8900000 1300000))) ; 6.8 bytes per string, singlecell

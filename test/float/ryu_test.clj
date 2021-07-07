@@ -33,8 +33,8 @@
       (doseq [[v d] combos]
         (let [libc (libc-float d v)
               ryu (ryu-float d v)]
-        (is (= (Float. libc) (Float. ryu)) {:value v :digits d})
-        (is (<= (count ryu) (count libc)) {:value v :digits d})))))
+         (is (= (Float. libc) (Float. ryu)) {:value v :digits d})
+         (is (<= (count ryu) (count libc)) {:value v :digits d})))))
   (testing "fractional ones"
     (let [int-ones (map #(-> (str "0." (apply str (repeat % \0)) \1)) (range 0 20))
           digits (range 1 20)
@@ -43,8 +43,8 @@
       (doseq [[v d] combos]
         (let [libc (libc-float d v)
               ryu (ryu-float d v)]
-        (is (= (Float. libc) (Float. ryu)) {:value v :digits d})
-        (is (<= (count ryu) (count libc)) {:value v :digits d})))))
+         (is (= (Float. libc) (Float. ryu)) {:value v :digits d})
+         (is (<= (count ryu) (count libc)) {:value v :digits d})))))
   (testing "nines"
     (let [int-ones (map #(-> (str "9999" (apply str (repeat % \0)))) (range 0 16))
           digits (range 1 20)
@@ -53,8 +53,8 @@
       (doseq [[v d] combos]
         (let [libc (libc-float d v)
               ryu (ryu-float d v)]
-        (is (= (Float. libc) (Float. ryu)) {:value v :digits d})
-        (is (<= (count ryu) (count libc)) {:value v :digits d})))))
+         (is (= (Float. libc) (Float. ryu)) {:value v :digits d})
+         (is (<= (count ryu) (count libc)) {:value v :digits d})))))
   (testing "fractional nines"
     (let [int-ones (map #(-> (str "0." (apply str (repeat % \0)) "9999")) (range 0 16))
           digits (range 1 20)
@@ -72,8 +72,8 @@
       (doseq [[v d] combos]
         (let [libc (libc-float d v)
               ryu (ryu-float d v)]
-        (is (= (Float. libc) (Float. ryu)) {:value v :digits d})
-        (is (<= (count ryu) (count libc)) {:value v :digits d}))))))
+         (is (= (Float. libc) (Float. ryu)) {:value v :digits d})
+         (is (<= (count ryu) (count libc)) {:value v :digits d}))))))
 
 
 (def sign

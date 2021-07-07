@@ -127,7 +127,7 @@
     (with-open [rdr (clojure.java.io/reader file)]
       (let [samples (rest (s/split (first (line-seq rdr)) #"\t"))
             N (count samples)]
-      (doall (rnd-lines samples N c))))))
+       (doall (rnd-lines samples N c))))))
 
 (defn gene-line [[chr start end gene]]
   {:chr chr
@@ -149,51 +149,51 @@
    {:desc "1 probe from probemap of 1.4M rows"
     :id :probemap-large-one
     :params (fn []
-            [(get-probes (dataset-map :probemap-large) 1)])
+             [(get-probes (dataset-map :probemap-large) 1)])
     :body (fn [xena probes]
             (probemap-probe xena (dataset-map :probemap-large) probes))}
    ^:probemap
    {:desc "2 probe from probemap of 1.4M rows"
     :id :probemap-large-two
     :params (fn []
-            [(get-probes (dataset-map :probemap-large) 2)])
+             [(get-probes (dataset-map :probemap-large) 2)])
     :body (fn [xena probes]
             (probemap-probe xena (dataset-map :probemap-large) probes))}
    ^:cnv
    {:desc "3 gene positions from CNV of 970k rows"
     :id :cnv-large-three-gene
     :params (fn []
-            [(get-genes (dataset-map :refgene-hg19) 3)])
+             [(get-genes (dataset-map :refgene-hg19) 3)])
     :body (fn [xena genes]
             (cnv-gene xena (dataset-map :cnv-large) genes))}
    ^:cnv
    {:desc "30 gene positions from CNV of 970k rows"
     :id :cnv-large-thirty-gene
     :params (fn []
-            [(get-genes (dataset-map :refgene-hg19) 30)])
+             [(get-genes (dataset-map :refgene-hg19) 30)])
     :body (fn [xena genes]
             (cnv-gene xena (dataset-map :cnv-large) genes))}
    ^:cnv
    {:desc "300 gene positions from CNV of 970k rows"
     :id :cnv-large-three-hundred-gene
     :params (fn []
-            [(get-genes (dataset-map :refgene-hg19) 300)])
+             [(get-genes (dataset-map :refgene-hg19) 300)])
     :body (fn [xena genes]
             (cnv-gene xena (dataset-map :cnv-large) genes))}
    ^:matrix
    {:desc "30 probes * 500 samples from matrix of 17k rows"
     :id :matrix-medium-thirty-probe
     :params (fn []
-            [(get-probes (dataset-map :matrix-medium) 30)
-             (get-samples (dataset-map :matrix-medium) 500)])
+             [(get-probes (dataset-map :matrix-medium) 30)
+              (get-samples (dataset-map :matrix-medium) 500)])
     :body (fn [xena probes samples]
             (probe-fetch xena (dataset-map :matrix-medium) probes samples))}
    ^:matrix
    {:desc "300 probes * 500 samples from matrix of 17k rows"
     :id :matrix-medium-three-hundred-probe
     :params (fn []
-            [(get-probes (dataset-map :matrix-medium) 300)
-             (get-samples (dataset-map :matrix-medium) 500)])
+             [(get-probes (dataset-map :matrix-medium) 300)
+              (get-samples (dataset-map :matrix-medium) 500)])
     :body (fn [xena probes samples]
             (probe-fetch xena (dataset-map :matrix-medium) probes samples))}
 
@@ -201,8 +201,8 @@
    {:desc "300 probes * 500 samples from matrix of 17k rows, xena-query"
     :id :matrix-medium-three-hundred-probe-xena
     :params (fn []
-            [(get-probes (dataset-map :matrix-medium) 300)
-             (get-samples (dataset-map :matrix-medium) 500)])
+             [(get-probes (dataset-map :matrix-medium) 300)
+              (get-samples (dataset-map :matrix-medium) 500)])
     :body (fn [xena probes samples]
             (probe-fetch-xena xena (dataset-map :matrix-medium) probes samples))}
 
@@ -224,15 +224,15 @@
     :id :codes-medium3
     :params (fn [] [])
     :body (fn [xena]
-            (code-fetch3 xena (dataset-map :matrix-medium) "sampleID"))}
-   ])
+            (code-fetch3 xena (dataset-map :matrix-medium) "sampleID"))}])
+
 
 (def test-map
   (into {} (map #(-> [(:id %) %]) tests)))
 
 (defn print-results [results]
   (doseq [{:keys [id result]} results]
-    (println (report (:desc (test-map id)) result))) )
+    (println (report (:desc (test-map id)) result))))
 
 (defn- mkdir [dir]
   (.mkdirs (io/file dir))
@@ -289,8 +289,8 @@
   (run "benchmark" "-i" "matrix-medium-three-hundred-probe-xena")
   (run "benchmark" "-i" "codes")
   (run "benchmark")
-  (.printStackTrace *e)
-  )
+  (.printStackTrace *e))
+
 
 (defn -main [& args]
   (try

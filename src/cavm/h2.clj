@@ -449,8 +449,8 @@
 ; create the sequence separately in order to set the cache parameter.
 
 (comment (defn- sequence-seq [seqname]
-   (let [[{val :i}] (exec-raw (format "SELECT CURRVAL('%s') AS I" seqname) :results)]
-     (range (+ val 1) Double/POSITIVE_INFINITY 1))))
+          (let [[{val :i}] (exec-raw (format "SELECT CURRVAL('%s') AS I" seqname) :results)]
+            (range (+ val 1) Double/POSITIVE_INFINITY 1))))
 
 (comment
   (defn- sequence-seq
@@ -530,7 +530,7 @@
 
 (defn- sequence-stmt ^cavm.statement.PStatement [db-seq]
   (sql-stmt-result (jdbcd/find-connection)
-                         (format "SELECT NEXT VALUE FOR %s AS i" db-seq)))
+                   (format "SELECT NEXT VALUE FOR %s AS i" db-seq)))
 
 (defn- run-delays [m]
   (into {} (for [[k v] m] [k (force v)])))
@@ -681,9 +681,9 @@
     (let [[{text :text :or {text "{}"}}] rows
           metadata (json/read-str text)]
       (jdbcd/update-values :dataset ["`id` = ?" dataset-id] {:text
-                                                            (json/write-str
-                                                              (assoc metadata "error" (str ex))
-                                                              :escape-slash false)}))))
+                                                             (json/write-str
+                                                               (assoc metadata "error" (str ex))
+                                                               :escape-slash false)}))))
 
 (defn- with-load-status* [dataset-id func]
   (try
@@ -781,7 +781,7 @@
               :subname file
               :conn-customizer "conn_customizer"
               :make-pool? make-pool?}]
-        (if make-pool? (delay (pool spec)) (delay (-> spec)))))
+       (if make-pool? (delay (pool spec)) (delay (-> spec)))))
 
 ; XXX should sanitize the query
 (defn- run-query [q]
@@ -1063,7 +1063,7 @@
                            (map (juxt :i :scores))
                            (into (or cache {})))]
         (update-in new-cache [:codes] update-codes-cache field-id missing new-cache))
-       cache)))
+      cache)))
 
 ;
 ;
@@ -1260,9 +1260,9 @@
                 (if (not-empty rows)
                   (fetch-rows cache rows (fields field))
                   {}))]
-  (evaluate (set-of-all-cache N) {:fetch fetch
-                                          :fetch-indexed (partial fetch-indexed fields)
-                                          :indexed? (partial has-index? fields)} exp)))
+   (evaluate (set-of-all-cache N) {:fetch fetch
+                                           :fetch-indexed (partial fetch-indexed fields)
+                                           :indexed? (partial has-index? fields)} exp)))
 
 ;(jdbcd/with-connection @(:db cavm.core/testdb)
 ;   (eval-sql {:select ["sampleID"] :from ["BRCA1"] :where [:in "sampleID"
@@ -1328,9 +1328,9 @@
         "ALTER TABLE `dataset` ADD FOREIGN KEY (`probeMap`) REFERENCES `dataset` (`name`)"))))
 
 (defn- migrate []
-  (migrate-probemap)
+  (migrate-probemap))
   ; ...add more here
-  )
+
 
 (defn- create[]
   (jdbcd/transaction
@@ -1353,9 +1353,9 @@
 (defmethod hsqlfmt/format-clause :table [[_ [fields alias]] _]
   (str "TABLE("
        (clojure.string/join ", "
-       (map (fn [[name type values]]
-              (str (hsqlfmt/to-sql name) " " (hsqlfmt/to-sql type) "="
-                   (hsqlfmt/paren-wrap (clojure.string/join ", " (map hsqlfmt/to-sql values))))) fields))
+        (map (fn [[name type values]]
+               (str (hsqlfmt/to-sql name) " " (hsqlfmt/to-sql type) "="
+                    (hsqlfmt/paren-wrap (clojure.string/join ", " (map hsqlfmt/to-sql values))))) fields))
        ") " (hsqlfmt/to-sql alias)))
 
 ; Fix GROUP_CONCAT in honeysql

@@ -109,12 +109,12 @@
             (do
               (info "Login:" email)
               (-> (response/redirect
-                  (let [{:keys [redirect-to]} session]
-                    (if (string? redirect-to)
-                      redirect-to
-                      (let [{:keys [uri params]} redirect-to]
-                        (str server-address (subs uri 1)
-                             (and (seq params) (str "?" (client/generate-query-string params))))))))
+                   (let [{:keys [redirect-to]} session]
+                     (if (string? redirect-to)
+                       redirect-to
+                       (let [{:keys [uri params]} redirect-to]
+                         (str server-address (subs uri 1)
+                              (and (seq params) (str "?" (client/generate-query-string params))))))))
                  (assoc :session {:user {:authenticated? true
                                          :email email}})))
             (login-failed-page (str "Invalid user email: " email "."))))

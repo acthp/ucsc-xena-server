@@ -106,8 +106,8 @@
           (throw-non-rte e))))
     (do
       (doseq [param-group param-groups]
-              ((or (:set-parameters db) set-parameters) stmt param-group)
-              (.addBatch stmt))
+             ((or (:set-parameters db) set-parameters) stmt param-group)
+             (.addBatch stmt))
       (if transaction?
         (with-db-transaction [t-db (add-connection db (.getConnection stmt))]
           (execute-batch stmt))

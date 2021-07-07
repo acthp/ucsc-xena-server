@@ -28,7 +28,7 @@
       (print " ")
       (clojure.pprint/write b#)
       (println "))"))
-     r#))
+    r#))
 
 (def ^:dynamic *eps* 0.0001)
 
@@ -101,9 +101,9 @@
 (def gen-names
   "Generate a list of names which are non-empty after trimming."
   (gen/sized (fn [size]
-             (gen/vector
-               (gen-name *name-max*)
-               1 (max 1 size)))))
+              (gen/vector
+                (gen-name *name-max*)
+                1 (max 1 size)))))
 
 (def gen-distinct-names
   "Generate a list of names which are non-empty after trimming, and
@@ -403,7 +403,7 @@
                  {:name "probe2" :id 3 :dataset_id 1}
                  {:name "probe3" :id 4 :dataset_id 1}
                  {:name "probe4" :id 5 :dataset_id 1}
-                 {:name "probe5" :id 6 :dataset_id 1} ]))
+                 {:name "probe5" :id 6 :dataset_id 1}]))
       (let [[probe1 probe2]
             (vec (map #(into [] %) (map ((first data) :data) ["probe1" "probe2"])))]
         (ct/is (nearly-equal probe1 [2.1 1.1]))
@@ -436,7 +436,7 @@
                  {:name "probe2" :id 9 :dataset_id 1}
                  {:name "probe3" :id 10 :dataset_id 1}
                  {:name "probe4" :id 11 :dataset_id 1}
-                 {:name "probe5" :id 12 :dataset_id 1} ]))
+                 {:name "probe5" :id 12 :dataset_id 1}]))
       (let [[probe1 probe2]
             (vec (map #(into [] %) (map ((first data) :data) ["probe1" "probe2"])))]
         (ct/is (nearly-equal probe1 [2.1 1.1]))
@@ -468,7 +468,7 @@
                  {:name "probe2" :id 3 :dataset_id 1}
                  {:name "probe2 (2)" :id 4 :dataset_id 1}
                  {:name "probe4" :id 5 :dataset_id 1}
-                 {:name "probe5" :id 6 :dataset_id 1} ]))
+                 {:name "probe5" :id 6 :dataset_id 1}]))
       (let [[probe1 probe2]
             (vec (map #(into [] %) (map ((first data) :data) ["probe1" "probe2"])))]
         (ct/is (nearly-equal probe1 [2.1 1.1]))
@@ -500,7 +500,7 @@
                  {:name "probe2" :id 3 :dataset_id 1}
                  {:name "probe3aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" :id 4 :dataset_id 1} ; truncated to 250 chars
                  {:name "probe4" :id 5 :dataset_id 1}
-                 {:name "probe5" :id 6 :dataset_id 1} ]))
+                 {:name "probe5" :id 6 :dataset_id 1}]))
       (let [[probe1 probe2]
             (vec (map #(into [] %) (map ((first data) :data) ["probe1" "probe2"])))]
         (ct/is (nearly-equal probe1 [2.1 1.1]))
@@ -863,10 +863,10 @@
         order (zipmap not-nil (range))
         nil-order (assoc order "" Double/NaN)]
     {:rows (map nil-order values)
-    :field name
-    :valueType "category"
-    :feature {:state values
-              :order order}}))
+     :field name
+     :valueType "category"
+     :feature {:state values
+               :order order}}))
 
 (ct/deftest gene-test
   (let [field0 (gene-field "genes"
@@ -902,8 +902,8 @@
                     {:select ["name"]
                      :from ["foo"]
                      :where [:in :any "genes" ["a"]]})
-                  {"name" ["probe0" nil]}))
-        ))))
+                  {"name" ["probe0" nil]}))))))
+
 
 ;
 ; Some experiments with generators for gene fields.

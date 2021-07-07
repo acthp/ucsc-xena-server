@@ -45,7 +45,7 @@
       (download (format "%s/download/%s" (:host ds) (:remote-id ds)) (io/file docroot (:id ds)))
       (download (format "%s/download/%s.json" (:host ds) (:remote-id ds)) (io/file docroot (str (:id ds) ".json")))
       (println "Loading" (:id ds))
-      (loader/loader xenadb detector docroot (io/file docroot (:id ds)))))
+      (loader/loader xenadb detector docroot (io/file docroot (:id ds))))))
 
   ; query remotes to get sha1
   ; there may be multiple files, e.g. for clinical. In that case we will
@@ -55,5 +55,3 @@
   ; :join [:dataset_source [:= :dataset.id :dataset_id]
   ;        :source [:= :source.id :source_id]]
   ; :where [:like :dataset.name "%copynumber_donor"]}
-
-  )

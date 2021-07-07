@@ -326,7 +326,7 @@
     (with-meta
       (cons (data-line features (drop-rows header) "category") ; coerce sampleID type
             (pmap #(data-line features (drop-rows (fix-vec (parse %) ncols)))
-                          (rest lines)))
+                   (rest lines)))
       (when dup-samples {:duplicate-keys {:sampleID dup-samples}}))))
 
 (defmethod matrix-data :default
@@ -585,13 +585,13 @@
   (let [[header-i header-content] (pick-header (line-seq ((:reader in))))
         in (drop-from-reader in (inc header-i))
         header (-> (columns-from-header columns (drop-hash header-content) fixed-columns)
-                    (#(for [[c i] (map vector % (range))]
-                        {:header c
-                         :type (or (column-types c) (guess-column-type in i))
-                         :start-index start-index
-                         :i i}))
-                    (find-position-fields start-index)
-                    assign-unique-names)
+                   (#(for [[c i] (map vector % (range))]
+                       {:header c
+                        :type (or (column-types c) (guess-column-type in i))
+                        :start-index start-index
+                        :i i}))
+                   (find-position-fields start-index)
+                   assign-unique-names)
         fields (mapv #(field-spec % in) header)] ; vector of field-specs, each holding vector of rows in :rows
     (if (= "position" (get-in fields [0 :valueType]))
       (let [pos-rows (force (get-in fields [0 :rows]))
@@ -852,5 +852,5 @@
   "Return ::tsv if the file is tsv, or nil"
   [file]
   (when (with-open [in (io/reader file)]
-        (is-tsv? (line-seq in)))
+         (is-tsv? (line-seq in)))
     ::tsv))

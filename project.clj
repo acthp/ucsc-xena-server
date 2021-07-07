@@ -10,8 +10,8 @@
                   ;; If nREPL takes too long to load it may timeout,
                   ;; increase this to wait longer before timing out.
                   ;; Defaults to 30000 (30 seconds)
-                  :timeout 12000000
-                  }
+                  :timeout 12000000}
+
   :profiles {:dev {:source-paths ["src-dev" "src"]
                    :dependencies [[org.jumpmind.symmetric.schemaspy/schemaspy "5.0.0"]
                                   [com.clojure-goes-fast/clj-java-decompiler  "0.1.0"]
